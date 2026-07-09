@@ -51,7 +51,7 @@
       line-height: 1.5;
       padding-bottom: 80px;
     }
-    .thai { font-family: 'Noto Sans Thai', sans-serif; }
+    .thai { font-family: 'Sarabun', sans-serif; }
 
     /* Layout */
     .container { max-width: 900px; margin: 0 auto; padding: 16px; }
@@ -328,7 +328,7 @@
 
   <!-- Header -->
   <header>
-    <h1>Học Nguyên Âm Tiếng Thái</h1>
+    <h1>Học Nguyên Âm Tiếng Thái cùng cộng đồng THÁI DỄ HỌC</h1>
     <p>Nhìn vị trí – hiểu cấu tạo – đọc được từ cơ bản</p>
   </header>
 
@@ -356,7 +356,7 @@
 
     <!-- BANNER GIẢI THÍCH MẪU -->
     <div class="banner-info">
-      💡 <strong>Nguyên tắc vàng:</strong> Trong tiếng Việt, nguyên âm luôn đứng SAU phụ âm. Nhưng trong tiếng Thái, nguyên âm có thể nằm ở <strong>CẢ 4 HƯỚNG</strong> hoặc <strong>BAO QUANH</strong> phụ âm đầu. Khi đọc, luôn xác định <em>Phụ âm đầu $\rightarrow$ Nguyên âm $\rightarrow$ Phụ âm cuối $\rightarrow$ Thanh điệu</em>.
+      💡 <strong>Nguyên tắc vàng:</strong> Trong tiếng Việt, nguyên âm luôn đứng SAU phụ âm. Nhưng trong tiếng Thái, nguyên âm có thể nằm ở <strong>CẢ 4 HƯỚNG</strong> hoặc <strong>BAO QUANH</strong> phụ âm đầu. Khi đọc, luôn xác định <em>Phụ âm đầu → Nguyên âm → Phụ âm cuối → Thanh điệu</em>.
     </div>
 
     <!-- TAB 1: BẢN ĐỒ VỊ TRÍ -->
@@ -534,41 +534,41 @@
 
     // 2. PHỤ ÂM MẪU
     const INITIALS = [
-      { c: 'ก', r: 'k', name: 'Kò Kài' },
-      { c: 'ข', r: 'kh', name: 'Khò Khái' },
-      { c: 'ค', r: 'kh', name: 'Khò Khwaay' },
-      { c: 'ง', r: 'ng', name: 'Ngò Ngūu' },
-      { c: 'จ', r: 'ch', name: 'Chò Chāan' },
-      { c: 'ด', r: 'd', name: 'Dò Dāek' },
-      { c: 'ต', r: 't', name: 'Tò Tăo' },
-      { c: 'น', r: 'n', name: 'Nò Nōo' },
-      { c: 'ม', r: 'm', name: 'Mò Māa' },
-      { c: 'ล', r: 'l', name: 'Lò Līng' },
-      { c: 'ว', r: 'w', name: 'Wò Wāen' },
-      { c: 'ส', r: 's', name: 'Sò Sūa' },
-      { c: 'ห', r: 'h', name: 'Hò Hīp' },
-      { c: 'อ', r: 'câm', name: 'Ò Ōang' }
+      { c: 'ก', r: 'k', name: 'ko kày' },
+      { c: 'ข', r: 'kh', name: 'khỏ khày' },
+      { c: 'ค', r: 'kh', name: 'khỏ khuột' },
+      { c: 'ง', r: 'ng', name: 'ngo  ngu' },
+      { c: 'จ', r: 'ch', name: 'cho chan' },
+      { c: 'ด', r: 'd', name: 'đo đệk' },
+      { c: 'ต', r: 't', name: 'to tàu' },
+      { c: 'น', r: 'n', name: 'no nủ' },
+      { c: 'ม', r: 'm', name: 'mo má' },
+      { c: 'ล', r: 'l', name: 'lo ling' },
+      { c: 'ว', r: 'w', name: 'wo wẻn' },
+      { c: 'ส', r: 's', name: 'sỏ sửa' },
+      { c: 'ห', r: 'h', name: 'hỏ hịp' },
+      { c: 'อ', r: 'câm', name: 'o àng' }
     ];
 
     // 3. PHỤ ÂM CUỐI (Có bổ sung `char` để lấy ký tự ghép âm động)
     const FINALS = [
-      { group: 'Âm n', char: 'น', letters: 'น / ณ / ญ / ร / ล / ฬ', ex: 'บ้าน (báan - nhà)' },
-      { group: 'Âm m', char: 'ม', letters: 'ม', ex: 'ดม (dom - ngửi)' },
-      { group: 'Âm ng', char: 'ง', letters: 'ง', ex: 'บาง (baang - mỏng)' },
+      { group: 'Âm n', char: 'น', letters: 'น / ณ / ญ / ร / ล / ฬ', ex: 'บ้าน (ban^ - nhà)' },
+      { group: 'Âm m', char: 'ม', letters: 'ม', ex: 'ดม (đôm - ngửi)' },
+      { group: 'Âm ng', char: 'ง', letters: 'ง', ex: 'บาง (ba:ng - mỏng)' },
       { group: 'Âm k', char: 'ก', letters: 'ก / ข / ค', ex: 'มาก (maak - nhiều)' },
-      { group: 'Âm t', char: 'ด', letters: 'ด / ต / ถ / ท / ธ / จ / ช / ซ / ศ / ษ / ส', ex: 'แปด (paet - số 8)' },
-      { group: 'Âm p', char: 'บ', letters: 'บ / ป / พ / ฟ / ภ', ex: 'รับ (rap - nhận)' },
-      { group: 'Âm w', char: 'ว', letters: 'ว', ex: 'หิว (hiw - đói)' },
-      { group: 'Âm y', char: 'ย', letters: 'ย', ex: 'สวย (suay - đẹp)' }
+      { group: 'Âm t', char: 'ด', letters: 'ด / ต / ถ / ท / ธ / จ / ช / ซ / ศ / ษ / ส', ex: 'แปด (pẹt - số 8)' },
+      { group: 'Âm p', char: 'บ', letters: 'บ / ป / พ / ฟ / ภ', ex: 'รับ (rắp - nhận)' },
+      { group: 'Âm w', char: 'ว', letters: 'ว', ex: 'หิว (hỉu - đói)' },
+      { group: 'Âm y', char: 'ย', letters: 'ย', ex: 'สวย (suổi - đẹp)' }
     ];
 
     // 4. DẤU THANH
     const TONES = [
-      { symbol: 'Không dấu', name: 'Thanh Thường (Sāmānn)', ex: 'กา (kaa) - Giọng ngang' },
-      { symbol: '่', name: 'Mai Ek (ไม้เอก)', ex: 'ก่า (kàa) - Giọng huyền/hạ' },
-      { symbol: '้', name: 'Mai Tho (ไม้โท)', ex: 'ก้า (kâa) - Giọng sắc/xuống' },
-      { symbol: '๊', name: 'Mai Tri (ไม้ตรี)', ex: 'ก๊า (káa) - Giọng cao' },
-      { symbol: '๋', name: 'Mai Chattawa (ไม้จัตวา)', ex: 'ก๋า (kăa) - Giọng hỏi/lên' }
+      { symbol: 'Không dấu', name: 'Thanh Thường (Sả măn)', ex: 'กา (kaa) - Âm ngang' },
+      { symbol: '่', name: 'Mái Ệk (ไม้เอก)', ex: 'ก่า (kàa) - Âm huyền/nặng' },
+      { symbol: '้', name: 'Mái Thô (ไม้โท)', ex: 'ก้า (kaa^) - Âm rơi/xuống' },
+      { symbol: '๊', name: 'Mái T-ri (ไม้ตรี)', ex: 'ก๊า (káa) - Âm sắc/ cao' },
+      { symbol: '๋', name: 'Mái Chặt-ta-wa (ไม้จัตวา)', ex: 'ก๋า (kảa) - Âm hỏi/lên' }
     ];
 
     // TỪ VỰNG TỔNG HỢP
@@ -577,22 +577,22 @@
       { t: 'กา', r: 'kaa', m: 'con quạ / ấm nước', lvl: 'Dễ' },
       { t: 'ตา', r: 'taa', m: 'mắt / ông ngoại', lvl: 'Dễ' },
       { t: 'ปลา', r: 'plaa', m: 'cá', lvl: 'Dễ' },
-      { t: 'ดู', r: 'doo', m: 'xem', lvl: 'Dễ' },
-      { t: 'ดี', r: 'dee', m: 'tốt', lvl: 'Dễ' },
-      { t: 'มี', r: 'mee', m: 'có', lvl: 'Dễ' },
-      { t: 'มือ', r: 'muee', m: 'tay', lvl: 'Trung bình' },
-      { t: 'คือ', r: 'khuee', m: 'là', lvl: 'Dễ' },
-      { t: 'ไป', r: 'pai', m: 'đi', lvl: 'Dễ' },
-      { t: 'ใจ', r: 'chai', m: 'trái tim', lvl: 'Dễ' },
-      { t: 'บ้าน', r: 'báan', m: 'nhà', lvl: 'Trung bình' },
-      { t: 'คน', r: 'khon', m: 'người', lvl: 'Dễ' },
+      { t: 'ดู', r: 'đu', m: 'xem', lvl: 'Dễ' },
+      { t: 'ดี', r: 'đi', m: 'tốt', lvl: 'Dễ' },
+      { t: 'มี', r: 'mi', m: 'có', lvl: 'Dễ' },
+      { t: 'มือ', r: 'mư', m: 'tay', lvl: 'Trung bình' },
+      { t: 'คือ', r: 'khư', m: 'là', lvl: 'Dễ' },
+      { t: 'ไป', r: 'pay', m: 'đi', lvl: 'Dễ' },
+      { t: 'ใจ', r: 'chay', m: 'trái tim', lvl: 'Dễ' },
+      { t: 'บ้าน', r: 'baan^', m: 'nhà', lvl: 'Trung bình' },
+      { t: 'คน', r: 'khôn', m: 'người', lvl: 'Dễ' },
       { t: 'กิน', r: 'kin', m: 'ăn', lvl: 'Dễ' },
-      { t: 'นอน', r: 'norn', m: 'ngủ', lvl: 'Trung bình' },
+      { t: 'นอน', r: 'non', m: 'ngủ', lvl: 'Trung bình' },
       { t: 'น้ำ', r: 'nám', m: 'nước', lvl: 'Dễ' },
       { t: 'ร้อน', r: 'róon', m: 'nóng', lvl: 'Trung bình' },
-      { t: 'เย็น', r: 'yen', m: 'lạnh / mát', lvl: 'Trung bình' },
-      { t: 'เรียน', r: 'reean', m: 'học', lvl: 'Trung bình' },
-      { t: 'เพื่อน', r: 'phuean', m: 'bạn', lvl: 'Trung bình' }
+      { t: 'เย็น', r: 'yên', m: 'lạnh / mát', lvl: 'Trung bình' },
+      { t: 'เรียน', r: 'riên', m: 'học', lvl: 'Trung bình' },
+      { t: 'เพื่อน', r: 'phươn^', m: 'bạn', lvl: 'Trung bình' }
     ];
 
     // ----- LOGIC ĐIỀU HÀNH TAB & INTERACTION -----
