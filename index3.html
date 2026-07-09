@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Học Nguyên Âm Tiếng Thái - Bản Đồ Cấu Tạo Âm Tiết</title>
+  
+  <!-- Fonts: Google Noto Sans Thai & Be Vietnam Pro -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Noto+Sans+Thai:wght@400;500;600;700&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    :root {
+      /* Palette theo vị trí */
+      --color-front: #0284c7;     /* TRƯỚC - Xanh dương sáng */
+      --bg-front: #e0f2fe;
+      --color-behind: #ea580c;    /* SAU - Cam ấm */
+      --bg-behind: #ffedd5;
+      --color-above: #9333ea;     /* TRÊN - Tím pastel */
+      --bg-above: #f3e8ff;
+      --color-below: #16a34a;     /* DƯỚI - Xanh lá */
+      --bg-below: #dcfce7;
+      --color-around: #e11d48;    /* XUNG QUANH - Hồng/Coral */
+      --bg-around: #ffe4e6;
+
+      /* Nhãn thành phần */
+      --color-initial: #0f172a;   /* Phụ âm đầu - Xanh than */
+      --color-final: #475569;     /* Phụ âm cuối - Xám đậm */
+      --color-tone: #d97706;      /* Dấu thanh - Vàng/Đỏ */
+
+      /* Structural UI */
+      --bg-app: #f8fafc;
+      --surface: #ffffff;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Be Vietnam Pro', sans-serif;
+      background-color: var(--bg-app);
+      color: var(--text-main);
+      line-height: 1.5;
+      padding-bottom: 80px;
+    }
+    .thai { font-family: 'Noto Sans Thai', sans-serif; }
+
+    /* Layout */
+    .container { max-width: 900px; margin: 0 auto; padding: 16px; }
+    
+    /* Header */
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 16px;
+      text-align: center;
+      position: sticky; top: 0; z-index: 50;
+    }
+    header h1 { font-size: 1.4rem; color: var(--text-main); font-weight: 700; }
+    header p { font-size: 0.875rem; color: var(--text-muted); margin-top: 4px; }
+
+    /* Legend Bar */
+    .legend-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin: 16px 0;
+      padding: 12px;
+      background: var(--surface);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+    }
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+    .pos-front { background: var(--bg-front); color: var(--color-front); }
+    .pos-behind { background: var(--bg-behind); color: var(--color-behind); }
+    .pos-above { background: var(--bg-above); color: var(--color-above); }
+    .pos-below { background: var(--bg-below); color: var(--color-below); }
+    .pos-around { background: var(--bg-around); color: var(--color-around); }
+
+    /* Nav Tabs */
+    .nav-tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 4px 0 12px 0;
+      margin-bottom: 16px;
+      scrollbar-width: none;
+    }
+    .nav-tabs::-webkit-scrollbar { display: none; }
+    .tab-btn {
+      flex: 0 0 auto;
+      padding: 10px 16px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+    .tab-btn.active {
+      background: var(--text-main);
+      color: white;
+      border-color: var(--text-main);
+    }
+
+    /* Tab Contents */
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* Cards & Components */
+    .card {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      padding: 20px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-sm);
+    }
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Spatial Vowel Map */
+    .spatial-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      max-width: 400px;
+      margin: 20px auto;
+    }
+    .grid-cell {
+      aspect-ratio: 1;
+      border-radius: var(--radius-md);
+      border: 2px dashed var(--border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.2s, border-color 0.2s;
+      padding: 8px;
+      text-align: center;
+    }
+    .grid-cell:hover { transform: scale(1.03); }
+    .grid-cell.center {
+      border: 2px solid var(--color-initial);
+      background: #f1f5f9;
+      cursor: default;
+    }
+    .grid-cell .cell-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+    .grid-cell .cell-thai { font-size: 1.8rem; font-weight: bold; }
+
+    /* Vowel Cards List */
+    .vowel-card {
+      border-left: 6px solid;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .vowel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .vowel-symbol { font-size: 2.5rem; font-weight: bold; line-height: 1; }
+    .badge {
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .formula-box {
+      background: var(--bg-app);
+      border-radius: var(--radius-md);
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .formula-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.95rem;
+    }
+    .formula-math { font-weight: 600; color: var(--text-muted); }
+    .formula-res { font-size: 1.3rem; font-weight: bold; }
+
+    /* Interactive Builder */
+    .builder-controls {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .control-group label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+    .control-group select {
+      width: 100%;
+      padding: 10px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      background: var(--surface);
+      font-size: 1rem;
+      font-weight: 600;
+      outline: none;
+    }
+    .display-screen {
+      background: #0f172a;
+      color: white;
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .display-thai { 
+      font-family: 'Sarabun', 'Noto Sans Thai', sans-serif;
+      font-size: 4.5rem; 
+      font-weight: 500; 
+      margin-bottom: 8px; 
+      min-height: 90px; 
+      letter-spacing: 2px;
+    }
+    .display-read { font-size: 1.25rem; color: #38bdf8; font-weight: 600; }
+    .display-meaning { font-size: 0.95rem; color: #94a3b8; margin-top: 4px; }
+
+    /* Quiz Component */
+    .quiz-option {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 8px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: var(--surface);
+      text-align: left;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .quiz-option:hover { background: #f1f5f9; }
+    .quiz-option.correct { background: #dcfce7; border-color: #16a34a; color: #15803d; }
+    .quiz-option.wrong { background: #fee2e2; border-color: #dc2626; color: #b91c1c; }
+
+    /* Explanation Banner */
+    .banner-info {
+      background: #eff6ff;
+      border-left: 4px solid #3b82f6;
+      padding: 14px;
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      margin-bottom: 16px;
+      font-size: 0.9rem;
+      color: #1e40af;
+    }
+
+    /* Word Grid */
+    .word-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 12px;
+    }
+    .word-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      background: var(--surface);
+    }
+    .word-thai { font-size: 2rem; font-weight: bold; }
+    .word-read { font-weight: 700; color: #0284c7; }
+    .word-meaning { color: var(--text-muted); font-size: 0.9rem; }
+
+    /* Footer Copyright Card */
+    footer {
+      margin-top: 32px;
+      text-align: center;
+    }
+    .copyright-card {
+      display: inline-block;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px 24px;
+      box-shadow: var(--shadow-sm);
+    }
+    .copyright-text {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <h1>Học Nguyên Âm Tiếng Thái</h1>
+    <p>Nhìn vị trí – hiểu cấu tạo – đọc được từ cơ bản</p>
+  </header>
+
+  <main class="container">
+
+    <!-- Legend -->
+    <div class="legend-bar">
+      <span class="legend-item pos-front">TRƯỚC phụ âm</span>
+      <span class="legend-item pos-behind">SAU phụ âm</span>
+      <span class="legend-item pos-above">TRÊN phụ âm</span>
+      <span class="legend-item pos-below">DƯỚI phụ âm</span>
+      <span class="legend-item pos-around">XUNG QUANH</span>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="nav-tabs">
+      <button class="tab-btn active" onclick="switchTab('map')"><i data-lucide="map"></i> Bản đồ Vị trí</button>
+      <button class="tab-btn" onclick="switchTab('groups')"><i data-lucide="grid"></i> Học Nguyên Âm</button>
+      <button class="tab-btn" onclick="switchTab('builder')"><i data-lucide="cpu"></i> Ghép Âm</button>
+      <button class="tab-btn" onclick="switchTab('finals')"><i data-lucide="layers"></i> Phụ Âm Cuối</button>
+      <button class="tab-btn" onclick="switchTab('tones')"><i data-lucide="music"></i> Dấu Thanh</button>
+      <button class="tab-btn" onclick="switchTab('practice')"><i data-lucide="award"></i> Luyện Tập</button>
+      <button class="tab-btn" onclick="switchTab('vocab')"><i data-lucide="book-open"></i> Từ Phổ Biến</button>
+    </div>
+
+    <!-- BANNER GIẢI THÍCH MẪU -->
+    <div class="banner-info">
+      💡 <strong>Nguyên tắc vàng:</strong> Trong tiếng Việt, nguyên âm luôn đứng SAU phụ âm. Nhưng trong tiếng Thái, nguyên âm có thể nằm ở <strong>CẢ 4 HƯỚNG</strong> hoặc <strong>BAO QUANH</strong> phụ âm đầu. Khi đọc, luôn xác định <em>Phụ âm đầu $\rightarrow$ Nguyên âm $\rightarrow$ Phụ âm cuối $\rightarrow$ Thanh điệu</em>.
+    </div>
+
+    <!-- TAB 1: BẢN ĐỒ VỊ TRÍ -->
+    <section id="tab-map" class="tab-content active">
+      <div class="card">
+        <div class="card-title"><i data-lucide="compass"></i> Bản Đồ Không Gian Nguyên Âm</div>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 12px;">
+          Lấy phụ âm <strong>ก (k)</strong> làm mốc trung tâm. Hãy bấm vào các ô vị trí để khám phá nguyên âm đứng ở vị trí đó.
+        </p>
+        
+        <div class="spatial-grid">
+          <!-- Hàng Trên -->
+          <div></div>
+          <div class="grid-cell pos-above" onclick="filterByPosition('above')">
+            <span class="cell-title">TRÊN</span>
+            <span class="cell-thai thai">-ิ -ี -ึ -ื</span>
+          </div>
+          <div></div>
+
+          <!-- Hàng Giữa -->
+          <div class="grid-cell pos-front" onclick="filterByPosition('front')">
+            <span class="cell-title">TRƯỚC</span>
+            <span class="cell-thai thai">เ- แ- โ-</span>
+          </div>
+          <div class="grid-cell center">
+            <span class="cell-title" style="color: var(--color-initial)">Phụ Âm Đầu</span>
+            <span class="cell-thai thai" style="color: var(--color-initial); font-size: 2.5rem;">ก</span>
+          </div>
+          <div class="grid-cell pos-behind" onclick="filterByPosition('behind')">
+            <span class="cell-title">SAU</span>
+            <span class="cell-thai thai">-ะ -า -อ</span>
+          </div>
+
+          <!-- Hàng Dưới -->
+          <div class="grid-cell pos-around" onclick="filterByPosition('around')" style="grid-column: span 1;">
+            <span class="cell-title">XUNG QUANH</span>
+            <span class="cell-thai thai">เ-าะ เ-ีย</span>
+          </div>
+          <div class="grid-cell pos-below" onclick="filterByPosition('below')">
+            <span class="cell-title">DƯỚI</span>
+            <span class="cell-thai thai">-ุ -ู</span>
+          </div>
+          <div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: HỌC NGUYÊN ÂM (THẺ DỮ LIỆU) -->
+    <section id="tab-groups" class="tab-content">
+      <div id="vowel-list"></div>
+    </section>
+
+    <!-- TAB 3: GHÉP ÂM INTERACTIVE -->
+    <section id="tab-builder" class="tab-content">
+      <div class="card">
+        <div class="card-title"><i data-lucide="sliders"></i> Bộ Tự Ghép Âm Tiếng Thái</div>
+        
+        <div class="builder-controls">
+          <div class="control-group">
+            <label>1. Phụ Âm Đầu (P.Âm)</label>
+            <select id="build-initial" onchange="updateBuilder()"></select>
+          </div>
+          <div class="control-group">
+            <label>2. Nguyên Âm</label>
+            <select id="build-vowel" onchange="updateBuilder()"></select>
+          </div>
+          <div class="control-group">
+            <label>3. Phụ Âm Cuối (Tùy chọn)</label>
+            <select id="build-final" onchange="updateBuilder()"></select>
+          </div>
+          <div class="control-group">
+            <label>4. Dấu Thanh (Tùy chọn)</label>
+            <select id="build-tone" onchange="updateBuilder()"></select>
+          </div>
+        </div>
+
+        <div class="display-screen">
+          <div id="builder-thai" class="display-thai thai">กะ</div>
+          <div id="builder-read" class="display-read">ka</div>
+          <div id="builder-meaning" class="display-meaning">Cấu tạo ghép âm cơ bản</div>
+        </div>
+
+        <div class="formula-box">
+          <strong>Phân tích thành phần âm tiết:</strong>
+          <div id="builder-breakdown" style="font-size: 0.9rem; color: var(--text-muted);"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: PHỤ ÂM CUỐI -->
+    <section id="tab-finals" class="tab-content">
+      <div class="card">
+        <div class="card-title"><i data-lucide="shield-check"></i> Quy Tắc Phụ Âm Cuối (Coda)</div>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 16px;">
+          Trong tiếng Thái, hàng chục phụ âm khi đứng ở cuối từ sẽ thu gọn về 8 âm cuối cơ bản:
+        </p>
+        <div class="word-grid" id="finals-grid"></div>
+      </div>
+    </section>
+
+    <!-- TAB 5: DẤU THANH -->
+    <section id="tab-tones" class="tab-content">
+      <div class="card">
+        <div class="card-title"><i data-lucide="activity"></i> 4 Dấu Thanh Cơ Bản</div>
+        <div class="banner-info" style="background:#fff7ed; border-color:#f97316; color:#9a3412;">
+          ⚠️ <strong>Cảnh báo:</strong> Thanh điệu thực tế phụ thuộc vào Nhóm phụ âm (Trung/Cao/Thấp) + Độ dài nguyên âm + Phụ âm cuối. Bảng dưới đây thể hiện cách biến đổi thanh điệu tiêu chuẩn với <strong>Phụ Âm Trung (ก)</strong>.
+        </div>
+        <div class="word-grid" id="tones-grid"></div>
+      </div>
+    </section>
+
+    <!-- TAB 6: LUYỆN TẬP -->
+    <section id="tab-practice" class="tab-content">
+      <div class="card">
+        <div class="card-title"><i data-lucide="help-circle"></i> Trắc Nghiệm Nhận Diện</div>
+        <div id="quiz-container">
+          <p id="quiz-question" style="font-size: 1.1rem; font-weight: 700; margin-bottom: 16px;"></p>
+          <div id="quiz-options"></div>
+          <button id="quiz-next" class="tab-btn active" style="margin-top: 16px; display: none;" onclick="generateQuiz()">Câu Tiếp Theo <i data-lucide="arrow-right"></i></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 7: TỪ PHỔ BIẾN -->
+    <section id="tab-vocab" class="tab-content">
+      <div class="card">
+        <div class="card-title"><i data-lucide="bookmark"></i> Từ Vựng Mẫu Nhập Môn</div>
+        <div class="word-grid" id="vocab-grid"></div>
+      </div>
+    </section>
+
+    <!-- FOOTER BẢN QUYỀN -->
+    <footer>
+      <div class="copyright-card">
+        <span class="copyright-text">Bản quyền Thái Dễ Học</span>
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- DATABASE & JAVASCRIPT LOGIC -->
+  <script>
+    // 1. DATABASE DỮ LIỆU NGUYÊN ÂM
+    const VOWEL_DATA = [
+      // TRƯỚC
+      { id: 'v1', vowel: 'เ-', positionType: 'front', positionLabelVietnamese: 'TRƯỚC', colorGroup: 'var(--color-front)', soundVietnamese: 'ê (dài)', shortOrLong: 'Dài', formulaBasic: 'เ + ก', exampleBasic: 'เก', readingBasic: 'keee', formulaWithFinal: 'เ + ก + น', exampleWithFinal: 'เกน', readingWithFinal: 'keen', commonWords: [{t: 'เก', r: 'keee', m: 'chơi ăn gian'}] },
+      { id: 'v2', vowel: 'แ-', positionType: 'front', positionLabelVietnamese: 'TRƯỚC', colorGroup: 'var(--color-front)', soundVietnamese: 'e (dài)', shortOrLong: 'Dài', formulaBasic: 'แ + ก', exampleBasic: 'แก', readingBasic: 'kaee', formulaWithFinal: 'แ + ก + น', exampleWithFinal: 'แกน', readingWithFinal: 'kaen', commonWords: [{t: 'แก', r: 'kaee', m: 'bạn/anh ấy'}] },
+      { id: 'v3', vowel: 'โ-', positionType: 'front', positionLabelVietnamese: 'TRƯỚC', colorGroup: 'var(--color-front)', soundVietnamese: 'ô (dài)', shortOrLong: 'Dài', formulaBasic: 'โ + ก', exampleBasic: 'โก', readingBasic: 'kooo', formulaWithFinal: 'โ + ก + น', exampleWithFinal: 'โคน', readingWithFinal: 'khōon', commonWords: [{t: 'โต', r: 'tōoo', m: 'lớn/to'}] },
+      { id: 'v4', vowel: 'ใ-', positionType: 'front', positionLabelVietnamese: 'TRƯỚC', colorGroup: 'var(--color-front)', soundVietnamese: 'ai (mộc)', shortOrLong: 'Ngắn', formulaBasic: 'ใ + จ', exampleBasic: 'ใจ', readingBasic: 'chai', formulaWithFinal: 'N/A', exampleWithFinal: 'N/A', readingWithFinal: 'N/A', commonWords: [{t: 'ใจ', r: 'chai', m: 'trái tim/lòng'}] },
+      { id: 'v5', vowel: 'ไ-', positionType: 'front', positionLabelVietnamese: 'TRƯỚC', colorGroup: 'var(--color-front)', soundVietnamese: 'ai (máy)', shortOrLong: 'Ngắn', formulaBasic: 'ไ + ป', exampleBasic: 'ไป', readingBasic: 'pai', formulaWithFinal: 'N/A', exampleWithFinal: 'N/A', readingWithFinal: 'N/A', commonWords: [{t: 'ไป', r: 'pai', m: 'đi'}] },
+
+      // SAU
+      { id: 'v6', vowel: '-ะ', positionType: 'behind', positionLabelVietnamese: 'SAU', colorGroup: 'var(--color-behind)', soundVietnamese: 'a (ngắn)', shortOrLong: 'Ngắn', formulaBasic: 'ก + ะ', exampleBasic: 'กะ', readingBasic: 'ka', formulaWithFinal: 'ก + ั + ก', exampleWithFinal: 'กัก', readingWithFinal: 'kak', commonWords: [{t: 'จะ', r: 'cha', m: 'sẽ'}] },
+      { id: 'v7', vowel: '-า', positionType: 'behind', positionLabelVietnamese: 'SAU', colorGroup: 'var(--color-behind)', soundVietnamese: 'a (dài)', shortOrLong: 'Dài', formulaBasic: 'ก + า', exampleBasic: 'กา', readingBasic: 'kaa', formulaWithFinal: 'ก + า + น', exampleWithFinal: 'กาน', readingWithFinal: 'kaan', commonWords: [{t: 'มา', r: 'maa', m: 'đến'}, {t: 'ตา', r: 'taa', m: 'mắt/ông ngoại'}, {t: 'ปla', r: 'plaa', m: 'cá'}] },
+      { id: 'v8', vowel: '-อ', positionType: 'behind', positionLabelVietnamese: 'SAU', colorGroup: 'var(--color-behind)', soundVietnamese: 'o (dài)', shortOrLong: 'Dài', formulaBasic: 'ก + อ', exampleBasic: 'กอ', readingBasic: 'kor', formulaWithFinal: 'น + อ + น', exampleWithFinal: 'นอน', readingWithFinal: 'norn', commonWords: [{t: 'นอน', r: 'norn', m: 'ngủ'}] },
+
+      // TRÊN
+      { id: 'v9', vowel: '-ิ', positionType: 'above', positionLabelVietnamese: 'TRÊN', colorGroup: 'var(--color-above)', soundVietnamese: 'i (ngắn)', shortOrLong: 'Ngắn', formulaBasic: 'ก + ิ', exampleBasic: 'กิ', readingBasic: 'ki', formulaWithFinal: 'ก + ิ + น', exampleWithFinal: 'กิน', readingWithFinal: 'kin', commonWords: [{t: 'กิน', r: 'kin', m: 'ăn'}] },
+      { id: 'v10', vowel: '-ี', positionType: 'above', positionLabelVietnamese: 'TRÊN', colorGroup: 'var(--color-above)', soundVietnamese: 'i (dài)', shortOrLong: 'Dài', formulaBasic: 'ก + ี', exampleBasic: 'กี', readingBasic: 'keee', formulaWithFinal: 'จ + ี + น', exampleWithFinal: 'จีน', readingWithFinal: 'cheen', commonWords: [{t: 'ดี', r: 'dee', m: 'tốt'}, {t: 'มี', r: 'mee', m: 'có'}] },
+      { id: 'v11', vowel: '-ึ', positionType: 'above', positionLabelVietnamese: 'TRÊN', colorGroup: 'var(--color-above)', soundVietnamese: 'ư (ngắn)', shortOrLong: 'Ngắn', formulaBasic: 'ก + ึ', exampleBasic: 'กึ', readingBasic: 'kue', formulaWithFinal: 'ต + ึ + ก', exampleWithFinal: 'ตึก', readingWithFinal: 'tuek', commonWords: [{t: 'ตึก', r: 'tuek', m: 'tòa nhà'}] },
+      { id: 'v12', vowel: '-ื', positionType: 'above', positionLabelVietnamese: 'TRÊN', colorGroup: 'var(--color-above)', soundVietnamese: 'ư (dài)', shortOrLong: 'Dài', formulaBasic: 'ก + ื + อ', exampleBasic: 'คือ', readingBasic: 'khuee', formulaWithFinal: 'ย + ื + น', exampleWithFinal: 'ยืน', readingWithFinal: 'yuen', commonWords: [{t: 'มือ', r: 'muee', m: 'tay'}, {t: 'คือ', r: 'khuee', m: 'là'}] },
+
+      // DƯỚI
+      { id: 'v13', vowel: '-ุ', positionType: 'below', positionLabelVietnamese: 'DƯỚI', colorGroup: 'var(--color-below)', soundVietnamese: 'u (ngắn)', shortOrLong: 'Ngắn', formulaBasic: 'ก + ุ', exampleBasic: 'กุ', readingBasic: 'ku', formulaWithFinal: 'ก + ุ + ง', exampleWithFinal: 'กุ้ง', readingWithFinal: 'kung', commonWords: [{t: 'กุ้ง', r: 'kung', m: 'tôm'}] },
+      { id: 'v14', vowel: '-ู', positionType: 'below', positionLabelVietnamese: 'DƯỚI', colorGroup: 'var(--color-below)', soundVietnamese: 'u (dài)', shortOrLong: 'Dài', formulaBasic: 'ก + ู', exampleBasic: 'กู', readingBasic: 'kooo', formulaWithFinal: 'พ + ู + ด', exampleWithFinal: 'พูด', readingWithFinal: 'phoot', commonWords: [{t: 'ดู', r: 'doo', m: 'xem'}] },
+
+      // XUNG QUANH
+      { id: 'v15', vowel: 'เ-า', positionType: 'around', positionLabelVietnamese: 'XUNG QUANH', colorGroup: 'var(--color-around)', soundVietnamese: 'ao', shortOrLong: 'Ngắn', formulaBasic: 'เ + ก + า', exampleBasic: 'เกau', readingBasic: 'kao', formulaWithFinal: 'N/A', exampleWithFinal: 'N/A', readingWithFinal: 'N/A', commonWords: [{t: 'เขา', r: 'khao', m: 'anh ấy/núi'}] },
+      { id: 'v16', vowel: 'เ-าะ', positionType: 'around', positionLabelVietnamese: 'XUNG QUANH', colorGroup: 'var(--color-around)', soundVietnamese: 'o (ngắn)', shortOrLong: 'Ngắn', formulaBasic: 'เ + ก + าะ', exampleBasic: 'เกาะ', readingBasic: 'koh', formulaWithFinal: 'N/A', exampleWithFinal: 'N/A', readingWithFinal: 'N/A', commonWords: [{t: 'เกาะ', r: 'koh', m: 'đảo'}] },
+      { id: 'v17', vowel: 'เ-ย', positionType: 'around', positionLabelVietnamese: 'XUNG QUANH', colorGroup: 'var(--color-around)', soundVietnamese: 'ơy (dài)', shortOrLong: 'Dài', formulaBasic: 'เ + ก + ย', exampleBasic: 'เกย', readingBasic: 'koey', formulaWithFinal: 'N/A', exampleWithFinal: 'N/A', readingWithFinal: 'N/A', commonWords: [{t: 'เคย', r: 'khoey', m: 'từng (làm gì đó)'}] },
+      { id: 'v18', vowel: 'เ-ีย', positionType: 'around', positionLabelVietnamese: 'XUNG QUANH', colorGroup: 'var(--color-around)', soundVietnamese: 'ia (dài)', shortOrLong: 'Dài', formulaBasic: 'เ + ก + ีย', exampleBasic: 'เกีย', readingBasic: 'keea', formulaWithFinal: 'ร + ีย + น', exampleWithFinal: 'เรียน', readingWithFinal: 'reean', commonWords: [{t: 'เรียน', r: 'reean', m: 'học'}, {t: 'เมีย', r: 'meea', m: 'vợ'}] },
+      { id: 'v19', vowel: 'เ-ือ', positionType: 'around', positionLabelVietnamese: 'XUNG QUANH', colorGroup: 'var(--color-around)', soundVietnamese: 'ưa (dài)', shortOrLong: 'Dài', formulaBasic: 'เ + ก + ือ', exampleBasic: 'เกลือ', readingBasic: 'kluea', formulaWithFinal: 'พ + ือ + น', exampleWithFinal: 'เพื่อน', readingWithFinal: 'phuean', commonWords: [{t: 'เพื่อน', r: 'phuean', m: 'bạn'}] },
+      { id: 'v20', vowel: '-ัว', positionType: 'around', positionLabelVietnamese: 'XUNG QUANH', colorGroup: 'var(--color-around)', soundVietnamese: 'ua (dài)', shortOrLong: 'Dài', formulaBasic: 'ก + ัว', exampleBasic: 'กลัว', readingBasic: 'klua', formulaWithFinal: 'ห + ัว + จ', exampleWithFinal: 'N/A', readingWithFinal: 'N/A', commonWords: [{t: 'ตัว', r: 'tua', m: 'con/cơ thể'}] }
+    ];
+
+    // 2. PHỤ ÂM MẪU
+    const INITIALS = [
+      { c: 'ก', r: 'k', name: 'Kò Kài' },
+      { c: 'ข', r: 'kh', name: 'Khò Khái' },
+      { c: 'ค', r: 'kh', name: 'Khò Khwaay' },
+      { c: 'ง', r: 'ng', name: 'Ngò Ngūu' },
+      { c: 'จ', r: 'ch', name: 'Chò Chāan' },
+      { c: 'ด', r: 'd', name: 'Dò Dāek' },
+      { c: 'ต', r: 't', name: 'Tò Tăo' },
+      { c: 'น', r: 'n', name: 'Nò Nōo' },
+      { c: 'ม', r: 'm', name: 'Mò Māa' },
+      { c: 'ล', r: 'l', name: 'Lò Līng' },
+      { c: 'ว', r: 'w', name: 'Wò Wāen' },
+      { c: 'ส', r: 's', name: 'Sò Sūa' },
+      { c: 'ห', r: 'h', name: 'Hò Hīp' },
+      { c: 'อ', r: 'câm', name: 'Ò Ōang' }
+    ];
+
+    // 3. PHỤ ÂM CUỐI (Có bổ sung `char` để lấy ký tự ghép âm động)
+    const FINALS = [
+      { group: 'Âm n', char: 'น', letters: 'น / ณ / ญ / ร / ล / ฬ', ex: 'บ้าน (báan - nhà)' },
+      { group: 'Âm m', char: 'ม', letters: 'ม', ex: 'ดม (dom - ngửi)' },
+      { group: 'Âm ng', char: 'ง', letters: 'ง', ex: 'บาง (baang - mỏng)' },
+      { group: 'Âm k', char: 'ก', letters: 'ก / ข / ค', ex: 'มาก (maak - nhiều)' },
+      { group: 'Âm t', char: 'ด', letters: 'ด / ต / ถ / ท / ธ / จ / ช / ซ / ศ / ษ / ส', ex: 'แปด (paet - số 8)' },
+      { group: 'Âm p', char: 'บ', letters: 'บ / ป / พ / ฟ / ภ', ex: 'รับ (rap - nhận)' },
+      { group: 'Âm w', char: 'ว', letters: 'ว', ex: 'หิว (hiw - đói)' },
+      { group: 'Âm y', char: 'ย', letters: 'ย', ex: 'สวย (suay - đẹp)' }
+    ];
+
+    // 4. DẤU THANH
+    const TONES = [
+      { symbol: 'Không dấu', name: 'Thanh Thường (Sāmānn)', ex: 'กา (kaa) - Giọng ngang' },
+      { symbol: '่', name: 'Mai Ek (ไม้เอก)', ex: 'ก่า (kàa) - Giọng huyền/hạ' },
+      { symbol: '้', name: 'Mai Tho (ไม้โท)', ex: 'ก้า (kâa) - Giọng sắc/xuống' },
+      { symbol: '๊', name: 'Mai Tri (ไม้ตรี)', ex: 'ก๊า (káa) - Giọng cao' },
+      { symbol: '๋', name: 'Mai Chattawa (ไม้จัตวา)', ex: 'ก๋า (kăa) - Giọng hỏi/lên' }
+    ];
+
+    // TỪ VỰNG TỔNG HỢP
+    const ALL_VOCAB = [
+      { t: 'มา', r: 'maa', m: 'đến', lvl: 'Dễ' },
+      { t: 'กา', r: 'kaa', m: 'con quạ / ấm nước', lvl: 'Dễ' },
+      { t: 'ตา', r: 'taa', m: 'mắt / ông ngoại', lvl: 'Dễ' },
+      { t: 'ปลา', r: 'plaa', m: 'cá', lvl: 'Dễ' },
+      { t: 'ดู', r: 'doo', m: 'xem', lvl: 'Dễ' },
+      { t: 'ดี', r: 'dee', m: 'tốt', lvl: 'Dễ' },
+      { t: 'มี', r: 'mee', m: 'có', lvl: 'Dễ' },
+      { t: 'มือ', r: 'muee', m: 'tay', lvl: 'Trung bình' },
+      { t: 'คือ', r: 'khuee', m: 'là', lvl: 'Dễ' },
+      { t: 'ไป', r: 'pai', m: 'đi', lvl: 'Dễ' },
+      { t: 'ใจ', r: 'chai', m: 'trái tim', lvl: 'Dễ' },
+      { t: 'บ้าน', r: 'báan', m: 'nhà', lvl: 'Trung bình' },
+      { t: 'คน', r: 'khon', m: 'người', lvl: 'Dễ' },
+      { t: 'กิน', r: 'kin', m: 'ăn', lvl: 'Dễ' },
+      { t: 'นอน', r: 'norn', m: 'ngủ', lvl: 'Trung bình' },
+      { t: 'น้ำ', r: 'nám', m: 'nước', lvl: 'Dễ' },
+      { t: 'ร้อน', r: 'róon', m: 'nóng', lvl: 'Trung bình' },
+      { t: 'เย็น', r: 'yen', m: 'lạnh / mát', lvl: 'Trung bình' },
+      { t: 'เรียน', r: 'reean', m: 'học', lvl: 'Trung bình' },
+      { t: 'เพื่อน', r: 'phuean', m: 'bạn', lvl: 'Trung bình' }
+    ];
+
+    // ----- LOGIC ĐIỀU HÀNH TAB & INTERACTION -----
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+      
+      document.getElementById(`tab-${tabId}`).classList.add('active');
+      
+      // Tìm button tab tương ứng để active
+      const tabBtns = document.querySelectorAll('.tab-btn');
+      tabBtns.forEach(btn => {
+        if (btn.getAttribute('onclick').includes(`'${tabId}'`)) {
+          btn.classList.add('active');
+        }
+      });
+    }
+
+    function filterByPosition(pos) {
+      switchTab('groups');
+      renderVowels(pos);
+    }
+
+    // Render danh sách nguyên âm
+    function renderVowels(filterPos = 'all') {
+      const container = document.getElementById('vowel-list');
+      container.innerHTML = '';
+
+      const list = filterPos === 'all' ? VOWEL_DATA : VOWEL_DATA.filter(v => v.positionType === filterPos);
+
+      list.forEach(v => {
+        const card = document.createElement('div');
+        card.className = 'card vowel-card';
+        card.style.borderColor = v.colorGroup;
+
+        card.innerHTML = `
+          <div class="vowel-header">
+            <div>
+              <span class="vowel-symbol thai" style="color: ${v.colorGroup}">${v.vowel}</span>
+              <span style="font-weight:700; margin-left: 8px; color: var(--text-muted)">(${v.soundVietnamese})</span>
+            </div>
+            <span class="badge" style="background:${v.colorGroup}; color:white">${v.positionLabelVietnamese} - ${v.shortOrLong}</span>
+          </div>
+
+          <div class="formula-box">
+            <div class="formula-row">
+              <span class="formula-math">Cơ bản: ${v.formulaBasic} $\rightarrow$</span>
+              <span class="formula-res thai">${v.exampleBasic}</span>
+              <span>(${v.readingBasic})</span>
+            </div>
+            ${v.formulaWithFinal !== 'N/A' ? `
+            <div class="formula-row">
+              <span class="formula-math">Có âm cuối: ${v.formulaWithFinal} $\rightarrow$</span>
+              <span class="formula-res thai">${v.exampleWithFinal}</span>
+              <span>(${v.readingWithFinal})</span>
+            </div>` : ''}
+          </div>
+
+          <div>
+            <strong style="font-size:0.85rem; color:var(--text-muted)">TỪ PHỔ BIẾN:</strong>
+            <div style="display:flex; gap:12px; margin-top:4px;">
+              ${v.commonWords.map(w => `<span class="thai" style="font-weight:bold">${w.t}</span> (${w.r}: ${w.m})`).join(' | ')}
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // Render Bộ Ghép Âm (Builder)
+    function initBuilder() {
+      const initSelect = document.getElementById('build-initial');
+      const vowelSelect = document.getElementById('build-vowel');
+      const finalSelect = document.getElementById('build-final');
+      const toneSelect = document.getElementById('build-tone');
+
+      initSelect.innerHTML = INITIALS.map(i => `<option value="${i.c}">${i.c} (${i.r})</option>`).join('');
+      vowelSelect.innerHTML = VOWEL_DATA.map(v => `<option value="${v.id}">${v.vowel} (${v.soundVietnamese})</option>`).join('');
+      
+      // Ánh xạ value của finalSelect sang ký tự phụ âm cuối đại diện thực tế (f.char)
+      finalSelect.innerHTML = `<option value="">-- Không có --</option>` + FINALS.map(f => `<option value="${f.char}">${f.char} (${f.group})</option>`).join('');
+      toneSelect.innerHTML = `<option value="">-- Không dấu --</option>` + TONES.slice(1).map(t => `<option value="${t.symbol}">${t.symbol} (${t.name})</option>`).join('');
+
+      updateBuilder();
+    }
+
+    function updateBuilder() {
+      const c = document.getElementById('build-initial').value;
+      const vObj = VOWEL_DATA.find(v => v.id === document.getElementById('build-vowel').value);
+      const fChar = document.getElementById('build-final').value; // Nhận ký tự Thái đại diện (e.g. 'น', 'ม')
+      const t = document.getElementById('build-tone').value;
+
+      let resultThai = "";
+      const baseVowel = vObj.vowel;
+
+      // Xử lý biến đổi nguyên âm khi có phụ âm cuối
+      if (fChar) {
+        if (baseVowel === "-ะ") {
+          // -ะ biến thành Mai Han-Akat (ั) phía trên phụ âm đầu
+          resultThai = c + "ั" + fChar;
+        } else if (baseVowel === "เ-ะ") {
+          // เ-ะ biến thành เ-็
+          resultThai = "เ" + c + "็" + fChar;
+        } else if (baseVowel === "แ-ะ") {
+          // แ-ะ biến thành แ-็
+          resultThai = "แ" + c + "็" + fChar;
+        } else if (baseVowel === "โ-ะ") {
+          // Tiêu giảm nguyên âm hoàn toàn (Zero vowel)
+          resultThai = c + fChar;
+        } else if (baseVowel === "-ัว") {
+          // -ัว mất dấu á phía trên, chỉ giữ lại ว
+          resultThai = c + "ว" + fChar;
+        } else if (baseVowel === "-ื") {
+          // -ื mất chữ อ ด้านหลัง khi ghép với âm cuối
+          resultThai = c + "ื" + fChar;
+        } else {
+          // Quy tắc chung: Thay dấu gạch ngang '-' bằng phụ âm đầu, rồi nối phụ âm cuối vào sau
+          resultThai = baseVowel.replace('-', c) + fChar;
+        }
+      } else {
+        // Trường hợp không có phụ âm cuối
+        if (baseVowel === "-ื") {
+          // Vô thanh, cần thêm อ Ở sau nếu không có phụ âm cuối
+          resultThai = c + "ื" + "อ";
+        } else {
+          resultThai = baseVowel.replace('-', c);
+        }
+      }
+
+      // Xử lý ghép dấu thanh lên đúng vị trí âm tiết tiếng Thái (vị trí phía trên phụ âm đầu/nguyên âm trên)
+      if (t) {
+        const upperDiacritics = ["ิ", "ี", "ึ", "ื", "ั", "็"];
+        let placed = false;
+        
+        // Nếu có nguyên âm trên hoặc mai han-akat, xếp dấu thanh chồng lên ký tự đó
+        for (let diacritic of upperDiacritics) {
+          if (resultThai.includes(diacritic)) {
+            resultThai = resultThai.replace(diacritic, diacritic + t);
+            placed = true;
+            break;
+          }
+        }
+        // Nếu không có, đặt ngay sau phụ âm đầu
+        if (!placed) {
+          resultThai = resultThai.replace(c, c + t);
+        }
+      }
+
+      // Tìm tên nhóm phụ âm cuối để hiển thị nhãn dịch nghĩa
+      const finalObj = FINALS.find(f => f.char === fChar);
+      const finalLabel = finalObj ? finalObj.group : 'Không';
+      
+      document.getElementById('builder-thai').innerText = resultThai;
+      document.getElementById('builder-read').innerText = `${c} + ${vObj.soundVietnamese} ${fChar ? '+ ' + fChar : ''}`;
+      document.getElementById('builder-breakdown').innerHTML = `
+        <span style="color:var(--color-initial)">Phụ âm đầu: ${c}</span> | 
+        <span style="color:${vObj.colorGroup}">Nguyên âm: ${vObj.vowel} (${vObj.positionLabelVietnamese})</span> | 
+        <span style="color:var(--color-final)">Âm cuối: ${fChar ? fChar + ' (' + finalLabel + ')' : 'Không'}</span>
+      `;
+    }
+
+    // Render Phụ âm cuối & Dấu thanh & Vocab
+    function renderStaticGrids() {
+      // Finals
+      document.getElementById('finals-grid').innerHTML = FINALS.map(f => `
+        <div class="word-card">
+          <div style="font-weight:bold; color:var(--color-front); font-size:1.1rem">${f.group}</div>
+          <div class="thai" style="font-size:1.4rem; font-weight:bold; margin: 4px 0">${f.letters}</div>
+          <div style="font-size:0.85rem; color:var(--text-muted)">Ví dụ: <span class="thai">${f.ex}</span></div>
+        </div>
+      `).join('');
+
+      // Tones
+      document.getElementById('tones-grid').innerHTML = TONES.map(t => `
+        <div class="word-card">
+          <div class="thai" style="font-size:2rem; font-weight:bold; color:var(--color-tone)">${t.symbol}</div>
+          <div style="font-weight:bold">${t.name}</div>
+          <div style="font-size:0.85rem; color:var(--text-muted); margin-top:4px">${t.ex}</div>
+        </div>
+      `).join('');
+
+      // Vocab
+      document.getElementById('vocab-grid').innerHTML = ALL_VOCAB.map(v => `
+        <div class="word-card">
+          <div style="display:flex; justify-content:space-between;">
+            <span class="word-thai thai">${v.t}</span>
+            <span class="badge" style="background:#f1f5f9; color:var(--text-muted); align-self:flex-start">${v.lvl}</span>
+          </div>
+          <div class="word-read">${v.r}</div>
+          <div class="word-meaning">${v.m}</div>
+        </div>
+      `).join('');
+    }
+
+    // LOGIC LUYỆN TẬP (QUIZ)
+    let currentQuiz = {};
+    function generateQuiz() {
+      document.getElementById('quiz-next').style.display = 'none';
+      const randomVowel = VOWEL_DATA[Math.floor(Math.random() * VOWEL_DATA.length)];
+      
+      currentQuiz = {
+        question: `Nguyên âm "${randomVowel.vowel}" nằm ở vị trí nào so với phụ âm đầu?`,
+        correct: randomVowel.positionLabelVietnamese,
+        options: ['TRƯỚC', 'SAU', 'TRÊN', 'DƯỚI', 'XUNG QUANH']
+      };
+
+      document.getElementById('quiz-question').innerText = currentQuiz.question;
+      const optsContainer = document.getElementById('quiz-options');
+      optsContainer.innerHTML = '';
+
+      currentQuiz.options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = 'quiz-option';
+        btn.innerText = opt;
+        btn.onclick = () => checkQuiz(btn, opt);
+        optsContainer.appendChild(btn);
+      });
+    }
+
+    function checkQuiz(btn, selected) {
+      const allBtns = document.querySelectorAll('.quiz-option');
+      allBtns.forEach(b => b.disabled = true);
+
+      if (selected === currentQuiz.correct) {
+        btn.classList.add('correct');
+      } else {
+        btn.classList.add('wrong');
+        allBtns.forEach(b => {
+          if (b.innerText === currentQuiz.correct) b.classList.add('correct');
+        });
+      }
+      document.getElementById('quiz-next').style.display = 'inline-flex';
+    }
+
+    // INIT APP
+    window.onload = () => {
+      lucide.createIcons();
+      renderVowels();
+      initBuilder();
+      renderStaticGrids();
+      generateQuiz();
+    };
+  </script>
+</body>
+</html>
